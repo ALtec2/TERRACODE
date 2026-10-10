@@ -17,7 +17,6 @@ public class Peice{
 	}
 
 	private int pawnMove(ArrayList<Peice> map ){
-		
 		return 0;
 	}
 

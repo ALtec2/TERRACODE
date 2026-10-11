@@ -3,13 +3,13 @@ public class Peice{
 	private boolean isWhite;
 	private int yPosition;
 	private int xPosition;
-	private int[] movex = new int[7];
-	private int[] movey = new int[7];
 	private int points;
 	private int value;
 	private String name;
 	private ArrayList<Peice> important;
 	private ArrayList<Peice> important2;
+	private int bestMoveX;
+	private int bestMoveY;
 
 	public Peice (boolean isWhite, int xPosition, int yPosition, String name){
 		this.isWhite=isWhite;
@@ -29,7 +29,7 @@ public class Peice{
 			points = 999;
 		}
 		else if(name.equalsIgnoreCase("Queen")){
-			points = 8;
+			points = 9;
 		}
 		else if(name.equalsIgnoreCase("Pawn")){
 			points = 1;
@@ -50,8 +50,15 @@ public class Peice{
 						;
 					}
 					else{
-						if(isWhite != important.get(x).getColor())
-							value = important.get(x).getPoints() - points;
+						int maxValue = 0;
+						for(int y = 0; y>important.size();y++){
+							if(maxValue<important.get(y).getPoints()-points){
+								maxValue=important.get(y).getPoints();
+									int bestMoveX = important.get(y).getXPosition();
+									int bestMoveY = important.get(y).getYPosition();
+							}
+						}
+						value=maxValue;
 					}
 				}
 			}
@@ -69,8 +76,17 @@ public class Peice{
 						;
 					}
 					else{
-						if(isWhite != important.get(x).getColor())
-							value = important.get(x).getPoints() - points;
+						if(isWhite != important.get(x).getColor()){
+							int maxValue = 0;
+							for(int y = 0; y>important.size();y++){
+								if(maxValue<important.get(y).getPoints()-points){
+									maxValue=important.get(y).getPoints();
+										int bestMoveX = important.get(y).getXPosition();
+										int bestMoveY = important.get(y).getYPosition();
+								}
+							}
+							value=maxValue;
+						}
 					}
 				}
 			}
@@ -128,6 +144,8 @@ public class Peice{
 		for(int x = 0; x>map.size();x++){
 			if(maxValue < (map.get(x).getPoints()-points)){
 				maxValue = map.get(x).getPoints()-points;
+				int bestMoveX = important.get(x).getXPosition();
+				int bestMoveY = important.get(x).getYPosition();
 			}
 		}
 		value = maxValue;
@@ -151,6 +169,8 @@ public class Peice{
 		for(int x = 0; x>important.size();x++){
 			if(maxValue<important.get(x).getPoints()-points){
 				maxValue=important.get(x).getPoints();
+				int bestMoveX = important.get(x).getXPosition();
+				int bestMoveY = important.get(x).getYPosition();
 			}
 		}
 		value=maxValue;
@@ -203,6 +223,8 @@ public class Peice{
 		for(int x = 0; x>important.size();x++){
 			if(maxValue<important.get(x).getPoints()-points){
 				maxValue=important.get(x).getPoints();
+				int bestMoveX = important.get(x).getXPosition();
+				int bestMoveY = important.get(x).getYPosition();
 			}
 		}
 		value=maxValue;
@@ -307,10 +329,13 @@ public class Peice{
 		for(int x = 0; x>important.size();x++){
 			if(maxValue<important.get(x).getPoints()-points){
 				maxValue=important.get(x).getPoints();
+				int bestMoveX = important.get(x).getXPosition();
+				int bestMoveY = important.get(x).getYPosition();
 			}
 		}
 		value=maxValue;
  	}
+
  	public void kingMove(ArrayList<Peice> map){
  		for(int x = 0; x>map.size();x++){
  			if(Math.abs(xPosition-map.get(x).getXPosition())>2){
@@ -329,6 +354,8 @@ public class Peice{
 		for(int x = 0; x>important.size();x++){
 			if(maxValue<important.get(x).getPoints()-points){
 				maxValue=important.get(x).getPoints();
+				int bestMoveX = important.get(x).getXPosition();
+				int bestMoveY = important.get(x).getYPosition();
 			}
 		}
 		value=maxValue;
@@ -352,5 +379,12 @@ public class Peice{
 
 	public int getValue(){
 		return value;
+	}
+	public String getName(){
+		return name;
+	}
+
+	public String toString(){
+		return name + " takes " + bestMoveX + ", "+ bestMoveY;
 	}
 }

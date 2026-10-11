@@ -16,6 +16,9 @@ public class chessDriver{
 			input.close();
 		}
 		Map map = new Map(row);
+
+		map.calc(true);
+		map.bestMove();
 		
 	}
 

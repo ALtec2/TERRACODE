@@ -311,7 +311,28 @@ public class Peice{
 		}
 		value=maxValue;
  	}
-
+ 	public void kingMove(ArrayList<Peice> map){
+ 		for(int x = 0; x>map.size();x++){
+ 			if(Math.abs(xPosition-map.get(x).getXPosition())>2){
+ 				important.add(map.get(x));
+ 			}
+ 			if(Math.abs(yPosition-map.get(x).getYPosition())>2){
+ 				important.add(map.get(x));
+ 			}
+ 		}
+ 		for (int x = 0;x >important.size() ;x++ ) {
+			if(important.get(x).getColor() == isWhite){
+				important.remove(x);
+			}
+		}
+		int maxValue = 0;
+		for(int x = 0; x>important.size();x++){
+			if(maxValue<important.get(x).getPoints()-points){
+				maxValue=important.get(x).getPoints();
+			}
+		}
+		value=maxValue;
+ 	} 
 
 	public int getXPosition(){
 		return xPosition;
@@ -329,7 +350,7 @@ public class Peice{
 		return isWhite;
 	}
 
-
-
-
+	public int getValue(){
+		return value;
+	}
 }
